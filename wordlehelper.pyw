@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-
+import collections
 
 def make_list():
     file = open('wordlelist.txt', 'r')
@@ -77,7 +77,7 @@ def main():
         yellowlist = [f'-YELLOW1-', f'-YELLOW2-', f'-YELLOW3-', f'-YELLOW4-',
                       f'-YELLOW5-']
         greenlist = [f'-GREEN1-', f'-GREEN2-', f'-GREEN3-', f'-GREEN4-', f'-GREEN5-']
-
+        counted_words = collections.Counter(word)
         for idx, green in enumerate(greenlist):
             if values[green]:
                 greendick[idx] = word[idx]
@@ -85,7 +85,8 @@ def main():
                 # print(values[yellowlist[idx]])
                 yellowsnow[idx] = word[idx]
             else:
-                graylist.append(word[idx])
+                if counted_words[word[idx]]==1:
+                    graylist.append(word[idx])
         if graylist:
             banning(graylist, list)
         if yellowsnow:
